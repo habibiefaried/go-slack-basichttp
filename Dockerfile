@@ -14,10 +14,9 @@ FROM debian:bullseye
 
 RUN apt update && apt install netcat curl wget procps -y
 
-ARG CONFIGYAML
-RUN echo $CONFIGYAML /config.yaml
+COPY config.yaml /config.yaml
 COPY form.template /form.template
-COPY main /app/main /main
+COPY --from=build-env /app/main /main
 
 RUN chmod +x /main
 
